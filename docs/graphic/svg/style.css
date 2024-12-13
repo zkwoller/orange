@@ -1,0 +1,67 @@
+#cir {
+  fill: gold;
+}
+#cir:hover {
+  fill: greenyellow;
+}
+
+.fast-line {
+  animation: rotateName 60s linear infinite;
+}
+.slow-line {
+  animation: rotateName 360s linear infinite;
+}
+@keyframes rotateName {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.textA {
+  font-size: 64px;
+  font-weight: bold;
+  fill: none;
+  stroke-width: 2px;
+  stroke-dasharray: 100 300;
+  animation: stroke 6s infinite linear;
+  stroke: #3498db;
+  text-shadow: 0 0 5px #3498db;
+}
+.textB {
+  font-size: 64px;
+  font-weight: bold;
+  fill: none;
+  stroke-width: 2px;
+  stroke-dasharray: 100 300;
+  stroke: #f39c12;
+  text-shadow: 0 0 5px #f39c12;
+  animation: stroke 6s infinite linear;
+  animation-delay: -2s;
+}
+.textC {
+  font-size: 64px;
+  font-weight: bold;
+  fill: none;
+  stroke-width: 2px;
+  stroke-dasharray: 100 300;
+  stroke: #9b59b6;
+  text-shadow: 0 0 5px #9b59b6;
+  animation: stroke 6s infinite linear;
+  animation-delay: -4s;
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: -400;
+  }
+}
+
+.svg-box:hover .will-show {
+  stroke-dashoffset: 0;
+}
+path {
+  transition: stroke-dashoffset 0.5s linear 0s;
+}
