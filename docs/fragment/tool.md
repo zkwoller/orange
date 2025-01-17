@@ -1,5 +1,5 @@
 ---
-group: 基础
+group: javascript
 order: 2
 toc: content
 ---
@@ -492,9 +492,13 @@ export const isEmojiCharacter = (value) => {
 ```
 ## 32. 获取URL参数列表
 ```js
-/**
-* @returns 
-*/
+export const GetRequest = () => {
+  const q={};
+  location.search.replace(/([^?&=]+)=([^&]+)/g,(_,k,v)=>q[k]=v);
+  return q;
+}
+```
+```js
 export const GetRequest = () => {
   let url = location.search;
   const paramsStr = /.+\?(.+)$/.exec(url)[1]; // 将 ? 后面的字符串取出来
@@ -1042,6 +1046,30 @@ export function uniqueArray(arr) {
   }
   return [...new Set(arr)]
 }
+
+function unique(arr){
+  if(!isArrayLink(arr)){ //不是类数组对象
+     return arr
+  }
+  let result = []
+  let objarr = []
+  let obj = Object.create(null)
+  arr.forEach(item => {
+    if(isStatic(item)){//是除了symbol外的原始数据
+      let key = item + '_' + getRawType(item);
+      if(!obj[key]){
+        obj[key] = true
+        result.push(item)
+      }
+    }else{//引用类型及symbol
+      if(!objarr.includes(item)){
+        objarr.push(item)
+        result.push(item)
+      }
+    }
+  }) 
+  return result
+}
 ```
 ## 62.对象转化为formData
 ```js
@@ -1579,4 +1607,65 @@ function omit(obj, keys) {
       return acc;
     }, {});
 }
+```
+## 101. 限制并发
+```js
+/**
+ * @limit number
+ */
+const limitFn = (limit) => {
+  const queue = [];
+  let activeCount = 0;
+  const next = () => {
+    activeCount--;
+    if (queue.length > 0) {
+      queue.shift()();
+    }
+  };
+  const run = async (fn, resolve, ...args) => {
+    activeCount++;
+    const result = (async () => fn(...args))();
+    try {
+      const res = await result;
+      resolve(res);
+    } catch { }
+    next();
+  };
+  const enqueue = (fn, resolve, ...args) => {
+    queue.push(run.bind(null, fn, resolve, ...args));
+    if (activeCount < limit && queue.length > 0) {
+      queue.shift()();
+    }
+  };
+  const generator = (fn, ...args) =>
+    new Promise((resolve) => {
+      enqueue(fn, resolve, ...args);
+    });
+
+  return generator;
+};
+```
+## 102. 获取本地时分秒
+```js
+new Date().toLocaleString().slice(10,19)
+```
+## 103. isPrimitive：检测数据是不是原始数据
+```js
+function isPrimitive(value) {
+  return isStatic(value) || typeof value === 'symbol'
+}
+```
+## 104. 获取数据类型
+```js
+function getRawType(value) {
+  return Object.prototype.toString.call(value).slice(8, -1)
+}
+```
+## 105. 禁止右键、选择、复制
+```js
+['contextmenu', 'selectstart', 'copy'].forEach(function(ev){
+  document.addEventListener(ev, function(event){
+    return event.returnValue = false
+  })
+});
 ```

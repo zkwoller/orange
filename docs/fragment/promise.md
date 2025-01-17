@@ -2,7 +2,7 @@
 nav:
   title: 片段
   order: 4
-group: 基础
+group: javascript
 order: 0
 toc: content
 ---
