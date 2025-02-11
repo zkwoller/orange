@@ -9,6 +9,7 @@ toc: content
 
 - 行轨道: `grid-template-rows` `grid-auto-rows`
 - 列轨道: `grid-template-columns` `grid-auto-columns`
+- 排列方式: `grid-auto-flow`
 
 ```css
 /* 其起始轨道为 20 像素，接着重复了 6 个 1fr 的轨道，最后再添加了一个 20 像素的轨道 */
@@ -93,4 +94,27 @@ toc: content
     "sd sd sd main main main main main main"
     "sd sd sd  ft  ft   ft   ft   ft   ft";
 }
+```
+
+```css
+.parent {
+  display: grid;
+  grid-template-columns:repeat(auto-fit, minmax(min(100%,100px), 1fr));
+}
+```
+可以使用justify-content属性控制列的分布：
+
+可以使用justify-items,justify-self属性登场属性控制列中对齐项目本身
+
+align-content类似于justify-content，但它影响行而不是列。
+
+类似地，align-items类似于justify-items，但它处理网格区域内项目的垂直对齐，而不是水平对齐
+
+place-content：justify-content + align-content 的简写
+
+place-items：justify-items + align-items 的简写
+
+瀑布流
+```css
+grid-template-rows: masonry;
 ```
