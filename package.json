@@ -7,7 +7,8 @@
     "dev": "dumi dev",
     "build": "dumi build",
     "preview": "dumi preview",
-    "prepare": "husky install && dumi setup"
+    "prepare": "husky install && dumi setup",
+    "postbuild": "gh-pages -d dist -r https://github.com/zkwoller/docs.git -b gh-pages"
   },
   "authors": [],
   "license": "MIT",
@@ -25,6 +26,7 @@
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "dumi": "^2.4.13",
+    "gh-pages": "^6.3.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1"
